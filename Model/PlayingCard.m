@@ -11,7 +11,7 @@
 @implementation PlayingCard
 @synthesize suit = _suit ; //这很重要 因为setter和getter方法都覆写了，所以没有自动合成
 +(NSArray *)validSuits{
-    return @[@"♠︎",@"♣︎",@"♦︎",@"♥︎"] ;
+    return @[@"♠️",@"♣️",@"♥️",@"♦️"] ;
 }
 +(NSArray *)rankStrings{
     return @[@"?",@"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"] ;
@@ -35,5 +35,17 @@
     if(rank<=[PlayingCard maxRank])
         _rank = rank ;
 }
-
+//覆写匹配方法使得积分合理
+-(int)match:(NSArray *)otherCards{
+    int score = 0 ;
+    if([otherCards count] == 1){
+        PlayingCard * newCard = [otherCards firstObject] ;
+        if(newCard.rank == self.rank){
+            score = 4 ;
+        }else if(newCard.suit == self.suit){
+            score = 1 ;
+        }
+    }
+    return score ;
+}
 @end
